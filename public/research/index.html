@@ -4,10 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>research · shippingwang</title>
+    <link rel="icon" href="/assets/favicon.png" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600&family=Syne:wght@700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=ZCOOL+XiaoWei&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/css/site.css" />
@@ -15,7 +16,10 @@
   <body>
     <header class="nav">
       <div class="wrap nav__inner">
-        <a class="nav__brand" href="/">shipping<span>wang</span></a>
+        <a class="nav__brand" href="/">
+          <img class="nav__mark" src="/assets/favicon.png" alt="" width="28" height="28" />
+          shippingwang
+        </a>
         <nav class="nav__links" aria-label="primary">
           <a class="is-active" href="/research/">research</a>
           <a href="/book/">book</a>
@@ -26,27 +30,16 @@
     </header>
 
     <main class="page wrap">
-      <p class="page__kicker reveal">research</p>
-      <h1 class="page__title reveal">拆开、记下、再想一遍</h1>
-      <p class="page__lead reveal">
-        技术博客，和读论文时的边注。占位页——之后每篇文章一个文件丢进
-        <code>content/research/</code> 即可。
-      </p>
-
-      <article class="panel reveal">
-        <h2>即将写入</h2>
-        <p>长上下文、训练推断系统、以及你在工程里真正卡住的那几步。</p>
-      </article>
-      <article class="panel reveal">
-        <h2>格式约定（草案）</h2>
-        <p>Markdown + 少量 front matter；列表页自动生成。先保持手写 HTML 也完全够用。</p>
-      </article>
+      <h1 class="page__title reveal">research</h1>
+      <div class="list reveal">
+        <span style="display:block;padding:1.1rem 0;color:var(--ink-soft);letter-spacing:0.08em">暂无</span>
+      </div>
     </main>
 
     <footer class="foot">
       <div class="wrap foot__inner">
-        <span>© shippingwang</span>
-        <a href="/">← home</a>
+        <span>shippingwang</span>
+        <a href="/">home</a>
       </div>
     </footer>
     <script src="/js/site.js"></script>

@@ -4,10 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>life · shippingwang</title>
+    <link rel="icon" href="/assets/favicon.png" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600&family=Syne:wght@700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=ZCOOL+XiaoWei&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/css/site.css" />
@@ -15,7 +16,10 @@
   <body>
     <header class="nav">
       <div class="wrap nav__inner">
-        <a class="nav__brand" href="/">shipping<span>wang</span></a>
+        <a class="nav__brand" href="/">
+          <img class="nav__mark" src="/assets/favicon.png" alt="" width="28" height="28" />
+          shippingwang
+        </a>
         <nav class="nav__links" aria-label="primary">
           <a href="/research/">research</a>
           <a href="/book/">book</a>
@@ -26,22 +30,16 @@
     </header>
 
     <main class="page wrap">
-      <p class="page__kicker reveal">life</p>
-      <h1 class="page__title reveal">现场之外</h1>
-      <p class="page__lead reveal">
-        文章、照片、视频。大图建议以后走对象存储，git 里只留封面和链接。
-      </p>
-
-      <article class="panel reveal">
-        <h2>空着，正好</h2>
-        <p>等有值得留下的片段再填。格式随缘：短文、相册页、或外嵌视频。</p>
-      </article>
+      <h1 class="page__title reveal">life</h1>
+      <div class="list reveal">
+        <span style="display:block;padding:1.1rem 0;color:var(--ink-soft);letter-spacing:0.08em">暂无</span>
+      </div>
     </main>
 
     <footer class="foot">
       <div class="wrap foot__inner">
-        <span>© shippingwang</span>
-        <a href="/">← home</a>
+        <span>shippingwang</span>
+        <a href="/">home</a>
       </div>
     </footer>
     <script src="/js/site.js"></script>

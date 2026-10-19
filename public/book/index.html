@@ -4,10 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>book · shippingwang</title>
+    <link rel="icon" href="/assets/favicon.png" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600&family=Syne:wght@700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=ZCOOL+XiaoWei&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/css/site.css" />
@@ -15,7 +16,10 @@
   <body>
     <header class="nav">
       <div class="wrap nav__inner">
-        <a class="nav__brand" href="/">shipping<span>wang</span></a>
+        <a class="nav__brand" href="/">
+          <img class="nav__mark" src="/assets/favicon.png" alt="" width="28" height="28" />
+          shippingwang
+        </a>
         <nav class="nav__links" aria-label="primary">
           <a href="/research/">research</a>
           <a class="is-active" href="/book/">book</a>
@@ -26,38 +30,16 @@
     </header>
 
     <main class="page wrap">
-      <p class="page__kicker reveal">book</p>
-      <h1 class="page__title reveal">书架</h1>
-      <p class="page__lead reveal">
-        自己写的书会挂在 <code>/book/&lt;slug&gt;/</code>。第一本是《现代大模型》，源码仍在
-        <code>shippingwang/llm</code>，构建后落到这里。
-      </p>
-
-      <a class="lane reveal" data-tone="book" href="/book/llm/">
-        <div class="lane__id">LLM</div>
-        <div>
-          <h3 class="lane__title">现代大模型</h3>
-          <p class="lane__desc">
-            做模型、跑模型、改模型。MkDocs 站点迁入后点这里进入正文。
-          </p>
-        </div>
-        <div class="lane__go">/book/llm →</div>
-      </a>
-
-      <article class="panel reveal" style="margin-top: 1rem">
-        <h2>接入进度</h2>
-        <p>
-          壳子先上线；下一步在 CI 里 checkout <code>llm</code> →
-          <code>mkdocs build</code> → 输出到 <code>dist/book/llm/</code>，并把书内
-          <code>site_url</code> 改成 <code>https://shippingwang.com/book/llm/</code>。
-        </p>
-      </article>
+      <h1 class="page__title reveal">book</h1>
+      <div class="list reveal">
+        <a href="/book/llm/">现代大模型</a>
+      </div>
     </main>
 
     <footer class="foot">
       <div class="wrap foot__inner">
-        <span>© shippingwang</span>
-        <a href="/">← home</a>
+        <span>shippingwang</span>
+        <a href="/">home</a>
       </div>
     </footer>
     <script src="/js/site.js"></script>

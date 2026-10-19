@@ -4,10 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>idea · shippingwang</title>
+    <link rel="icon" href="/assets/favicon.png" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600&family=Syne:wght@700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=ZCOOL+XiaoWei&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/css/site.css" />
@@ -15,7 +16,10 @@
   <body>
     <header class="nav">
       <div class="wrap nav__inner">
-        <a class="nav__brand" href="/">shipping<span>wang</span></a>
+        <a class="nav__brand" href="/">
+          <img class="nav__mark" src="/assets/favicon.png" alt="" width="28" height="28" />
+          shippingwang
+        </a>
         <nav class="nav__links" aria-label="primary">
           <a href="/research/">research</a>
           <a href="/book/">book</a>
@@ -26,32 +30,17 @@
     </header>
 
     <main class="page wrap">
-      <p class="page__kicker reveal">idea</p>
-      <h1 class="page__title reveal">短卡片</h1>
-      <p class="page__lead reveal">
-        一闪而过的念头。不成文也没关系——先钉在墙上。
-      </p>
-
-      <div class="idea-grid">
-        <article class="idea reveal">
-          <span class="idea__tag">seed</span>
-          <p>个人站只要一个域名；书是 /book 下的子宇宙，不要再开子域。</p>
-        </article>
-        <article class="idea reveal">
-          <span class="idea__tag">seed</span>
-          <p>idea 页用等宽字体，逼自己写短，写长了就该进 research。</p>
-        </article>
-        <article class="idea reveal">
-          <span class="idea__tag">todo</span>
-          <p>每条 idea 以后改成独立 md；列表按时间倒序，支持 tag 过滤。</p>
-        </article>
+      <h1 class="page__title reveal">idea</h1>
+      <div class="idea-grid reveal">
+        <article class="idea">书挂在 /book 下，不要再开子域。</article>
+        <article class="idea">短的进 idea，长的进 research。</article>
       </div>
     </main>
 
     <footer class="foot">
       <div class="wrap foot__inner">
-        <span>© shippingwang</span>
-        <a href="/">← home</a>
+        <span>shippingwang</span>
+        <a href="/">home</a>
       </div>
     </footer>
     <script src="/js/site.js"></script>
