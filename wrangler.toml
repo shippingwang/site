@@ -1,0 +1,6 @@
+# 个人站 shippingwang.com（与 shippingwang/llm 的 wrangler 分离）
+name = "site"
+compatibility_date = "2026-10-18"
+
+[assets]
+directory = "dist"
