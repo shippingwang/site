@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# 拼个人站 dist/；若找得到 llm 书仓，则编进 dist/book/llm/
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DIST="$ROOT/dist"
@@ -7,9 +8,28 @@ rm -rf "$DIST"
 mkdir -p "$DIST"
 cp -a "$ROOT/public/." "$DIST/"
 
-# 书站尚未迁入时的占位，避免 /book/llm 404
-mkdir -p "$DIST/book/llm"
-if [[ ! -f "$DIST/book/llm/index.html" ]]; then
+resolve_llm_dir() {
+  if [[ -n "${LLM_DIR:-}" && -f "${LLM_DIR}/网站/mkdocs.yml" ]]; then
+    echo "$LLM_DIR"
+    return
+  fi
+  # 本机：与 site 并列的 现代大模型
+  if [[ -f "$ROOT/../现代大模型/网站/mkdocs.yml" ]]; then
+    echo "$ROOT/../现代大模型"
+    return
+  fi
+  # CI / Cloudflare：拉公开仓 shippingwang/llm
+  local cache="$ROOT/.cache/llm"
+  if [[ ! -f "$cache/网站/mkdocs.yml" ]]; then
+    mkdir -p "$ROOT/.cache"
+    rm -rf "$cache"
+    git clone --depth 1 https://github.com/shippingwang/llm.git "$cache"
+  fi
+  echo "$cache"
+}
+
+write_placeholder() {
+  mkdir -p "$DIST/book/llm"
   cat >"$DIST/book/llm/index.html" <<'HTML'
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -29,6 +49,38 @@ if [[ ! -f "$DIST/book/llm/index.html" ]]; then
 </body>
 </html>
 HTML
+}
+
+build_book() {
+  local llm web
+  llm="$(resolve_llm_dir)"
+  web="$llm/网站"
+  echo "book source → $web"
+
+  if ! command -v python3 >/dev/null; then
+    echo "no python3, skip book" >&2
+    write_placeholder
+    return
+  fi
+
+  python3 -m pip install -q -r "$web/requirements.txt"
+  # sync 失败也不挡：用仓里已有 docs 继续 build
+  if [[ -f "$web/sync_content.py" ]]; then
+    python3 "$web/sync_content.py" || echo "sync_content failed, using existing docs" >&2
+  fi
+  python3 -m mkdocs build --config-file "$web/mkdocs.yml"
+
+  rm -rf "$DIST/book/llm"
+  mkdir -p "$DIST/book/llm"
+  cp -a "$web/site/." "$DIST/book/llm/"
+  echo "book → $DIST/book/llm"
+}
+
+if build_book; then
+  :
+else
+  echo "book build failed, placeholder" >&2
+  write_placeholder
 fi
 
 echo "built → $DIST"
