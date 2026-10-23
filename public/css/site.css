@@ -36,12 +36,14 @@ body {
 }
 
 /* 宣纸感 + 可选背景图 */
-body.home {
+body.home,
+body.soon {
   background-color: #1a1c18;
   color: #f4f0e6;
 }
 
-body.home::before {
+body.home::before,
+body.soon::before {
   content: "";
   position: fixed;
   inset: 0;
@@ -56,7 +58,18 @@ body.home::before {
     url("/assets/cambodia-angkor.jpg") center / cover no-repeat;
 }
 
-body:not(.home)::before {
+body.soon::before {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(26, 28, 24, 0.35) 0%,
+      rgba(26, 28, 24, 0.55) 45%,
+      rgba(26, 28, 24, 0.78) 100%
+    ),
+    url("/assets/panda.jpg") center / cover no-repeat;
+}
+
+body:not(.home):not(.soon)::before {
   content: "";
   position: fixed;
   inset: 0;
@@ -94,7 +107,8 @@ img {
   border-bottom: 1px solid var(--line);
 }
 
-body.home .nav {
+body.home .nav,
+body.soon .nav {
   background: color-mix(in srgb, #1a1c18 55%, transparent);
   border-bottom-color: rgba(244, 240, 230, 0.12);
 }
@@ -266,7 +280,8 @@ body.home .nav__links a.is-active {
   color: var(--ink-soft);
 }
 
-body.home .foot {
+body.home .foot,
+body.soon .foot {
   border-top-color: rgba(244, 240, 230, 0.12);
   color: rgba(244, 240, 230, 0.55);
 }
