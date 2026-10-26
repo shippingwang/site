@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 拼个人站 dist/；若找得到 llm 书仓，则编进 dist/book/llm/
+# 拼个人站 dist/；编入 llm 书仓与 research 笔记仓
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DIST="$ROOT/dist"
@@ -24,6 +24,24 @@ resolve_llm_dir() {
     mkdir -p "$ROOT/.cache"
     rm -rf "$cache"
     git clone --depth 1 https://github.com/shippingwang/llm.git "$cache"
+  fi
+  echo "$cache"
+}
+
+resolve_research_dir() {
+  if [[ -n "${RESEARCH_DIR:-}" && -f "${RESEARCH_DIR}/build.py" ]]; then
+    echo "$RESEARCH_DIR"
+    return
+  fi
+  if [[ -f "$ROOT/../research/build.py" ]]; then
+    echo "$ROOT/../research"
+    return
+  fi
+  local cache="$ROOT/.cache/research"
+  if [[ ! -f "$cache/build.py" ]]; then
+    mkdir -p "$ROOT/.cache"
+    rm -rf "$cache"
+    git clone --depth 1 https://github.com/shippingwang/research.git "$cache"
   fi
   echo "$cache"
 }
@@ -81,6 +99,27 @@ if build_book; then
 else
   echo "book build failed, placeholder" >&2
   write_placeholder
+fi
+
+build_research() {
+  local src
+  src="$(resolve_research_dir)"
+  echo "research source → $src"
+  if ! command -v python3 >/dev/null; then
+    echo "no python3, skip research" >&2
+    return 1
+  fi
+  python3 "$src/build.py"
+  rm -rf "$DIST/research"
+  mkdir -p "$DIST/research"
+  cp -a "$src/dist/." "$DIST/research/"
+  echo "research → $DIST/research"
+}
+
+if build_research; then
+  :
+else
+  echo "research build failed; keeping public/research placeholder" >&2
 fi
 
 echo "built → $DIST"

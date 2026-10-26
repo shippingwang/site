@@ -5,12 +5,12 @@
 | 路径 | 栏目 |
 |------|------|
 | `/` | 首页 |
-| `/research/` | 技术博客 / 论文随想 |
+| `/research/` | 研究笔记（内容仓 [`shippingwang/research`](https://github.com/shippingwang/research)） |
 | `/book/` | 书架；书正文在 `/book/<slug>/` |
 | `/life/` | 生活 |
 | `/idea/` | 短卡片 |
 
-书稿仓库仍是 [`shippingwang/llm`](https://github.com/shippingwang/llm)，不要把书合进本仓。
+书稿仓库是 [`shippingwang/llm`](https://github.com/shippingwang/llm)；研究笔记是 [`shippingwang/research`](https://github.com/shippingwang/research)。都不要合进本仓。
 
 ## 本地
 
