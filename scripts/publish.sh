@@ -46,7 +46,18 @@ push_repo() {
   echo "==> $label"
   (
     cd "$dir"
-    git add "$@"
+    local paths=()
+    local p
+    for p in "$@"; do
+      if [[ -e "$p" ]]; then
+        paths+=("$p")
+      fi
+    done
+    if [[ ${#paths[@]} -eq 0 ]]; then
+      echo "    no matching paths, skip"
+      return 0
+    fi
+    git add -- "${paths[@]}"
     if git diff --cached --quiet; then
       if [[ -n "$(git log "origin/$(git rev-parse --abbrev-ref HEAD)"..HEAD --oneline 2>/dev/null || true)" ]]; then
         git push origin HEAD
@@ -86,9 +97,7 @@ fi
 # —— llm：书稿 + 站点生成脚本（不提交 docs/site 产物）——
 if want llm; then
   push_repo "$LLM_DIR" llm \
-    书稿 网站/sync_content.py 网站/mkdocs.yml 网站/stylesheets 网站/overrides 网站/assets \
-    网站/javascripts sync_notion.py wrangler.toml README.md \
-    .github
+    书稿 网站 sync_notion.py wrangler.toml LICENSE .github .gitignore
 fi
 
 # —— site 壳：public / scripts / wrangler ——
