@@ -19,17 +19,24 @@
 npx --yes serve dist   # 或 python3 -m http.server -d dist 8080
 ```
 
-## 部署
+## 一键发布（research + llm + site）
 
-Cloudflare Workers 静态资源：`wrangler.toml` → `assets.directory = "dist"`。
+旁路默认：`../research`、`../现代大模型`。改完任意仓后：
 
 ```bash
-./scripts/build.sh
-npx wrangler deploy
+./scripts/publish.sh              # 全部：有改动就 commit/push，再空提交触发 CI
+./scripts/publish.sh research     # 只笔记
+./scripts/publish.sh llm          # 只书
+./scripts/publish.sh site         # 只壳子
+./scripts/publish.sh research llm
+MSG="fix home type" ./scripts/publish.sh site
 ```
 
-或 push `main`，走 `.github/workflows/deploy.yml`（需配置 `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID`）。
+`research` 仓里的 `./publish.sh` 仍可用，内部转调本脚本的 `research` 模式。
 
-## 下一步
+## 部署
 
-CI 里 checkout `llm` → `mkdocs build` → 输出到 `dist/book/llm/`，并把书内 `site_url` 改为 `https://shippingwang.com/book/llm/`。
+Cloudflare Workers：`wrangler.toml` → `assets.directory = "dist"`。
+
+push `main` → `.github/workflows/deploy.yml`（需 `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID`）。  
+CI 会拉 [`llm`](https://github.com/shippingwang/llm) 与 [`research`](https://github.com/shippingwang/research) 编进 `dist/book/llm/`、`dist/research/`。
