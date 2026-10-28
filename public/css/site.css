@@ -305,9 +305,38 @@ body.soon .foot {
 }
 
 @media (max-width: 40rem) {
+  /* 手机顶栏：只留图标，省出给栏目的横向空间 */
+  .nav__brand-text {
+    display: none;
+  }
+
+  .nav__inner {
+    gap: 0.65rem;
+    min-height: 3rem;
+  }
+
+  .nav__links {
+    gap: 0.55rem 0.9rem;
+    font-size: 0.88rem;
+    justify-content: flex-end;
+  }
+
+  /* 首页四个入口改为纵向，避免串行换行 */
   .hero__nav {
-    gap: 0.85rem 1.25rem;
-    font-size: 1.05rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.1rem;
+    margin-top: 2rem;
+    font-size: 1.08rem;
+  }
+
+  .page {
+    padding: 2.25rem 0 3.5rem;
+  }
+
+  .page__title {
+    font-size: clamp(1.75rem, 9vw, 2.4rem);
+    letter-spacing: 0.12em;
   }
 }
 
