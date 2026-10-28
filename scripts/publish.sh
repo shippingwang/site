@@ -94,8 +94,10 @@ if want research; then
     posts static build.py README.md publish.sh
 fi
 
-# —— llm：书稿 + 站点生成脚本（不提交 docs/site 产物）——
+# —— llm：公式检查/修复 → 再推书稿 + 站点生成脚本 ——
 if want llm; then
+  echo "==> llm math check"
+  python3 "$LLM_DIR/网站/check_math.py" --fix
   push_repo "$LLM_DIR" llm \
     书稿 网站 sync_notion.py wrangler.toml LICENSE .github .gitignore
 fi

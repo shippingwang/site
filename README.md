@@ -34,6 +34,8 @@ MSG="fix home type" ./scripts/publish.sh site
 
 `research` 仓里的 `./publish.sh` 仍可用，内部转调本脚本的 `research` 模式。
 
+推 `llm` 时会先跑 `现代大模型/网站/check_math.py --fix`（行内误塞 `align`、跨行行内公式、`\frac1d` 等）；修不干净会直接失败，避免把坏公式推上线。llm 仓 CI 里也会再跑一遍只读检查。
+
 ## 部署
 
 Cloudflare Workers：`wrangler.toml` → `assets.directory = "dist"`。
