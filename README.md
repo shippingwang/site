@@ -6,7 +6,7 @@
 |------|------|
 | `/` | 首页 |
 | `/research/` | 研究笔记（内容仓 [`shippingwang/research`](https://github.com/shippingwang/research)） |
-| `/book/` | 书架；书正文在 `/book/<slug>/` |
+| `/book/` | 书架（丛书分层）；正文在 `/book/llm/<册>/` |
 | `/life/` | 生活 |
 | `/idea/` | 短卡片 |
 

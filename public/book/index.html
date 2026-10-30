@@ -29,11 +29,28 @@
       </div>
     </header>
 
-    <main class="page wrap">
+    <main class="page wrap wrap--shelf">
       <h1 class="page__title reveal">book</h1>
-      <div class="list reveal">
-        <a href="/book/llm/">现代大模型</a>
-      </div>
+
+      <section class="shelf reveal" aria-labelledby="shelf-llm">
+        <h2 class="shelf__label" id="shelf-llm">现代大模型</h2>
+        <div class="shelf__row">
+          <a class="spine" href="/book/llm/01-architecture/">
+            <span class="spine__vol">I</span>
+            <span class="spine__title">现代大模型架构</span>
+          </a>
+          <a class="spine spine--soon" href="/book/llm/02-systems/" aria-label="第二册 训练与推理系统，暂无">
+            <span class="spine__vol">II</span>
+            <span class="spine__title">训练与推理系统</span>
+            <span class="spine__tag">暂无</span>
+          </a>
+          <a class="spine" href="/book/llm/03-post-training/">
+            <span class="spine__vol">III</span>
+            <span class="spine__title">后训练与智能体</span>
+          </a>
+        </div>
+        <div class="shelf__plank" aria-hidden="true"></div>
+      </section>
     </main>
 
     <footer class="foot">

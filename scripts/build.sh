@@ -54,16 +54,13 @@ write_placeholder() {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>现代大模型 · 迁入中</title>
+  <title>现代大模型</title>
   <meta http-equiv="refresh" content="0;url=/book/" />
-  <link rel="stylesheet" href="/css/site.css" />
+  <link rel="canonical" href="https://shippingwang.com/book/" />
+  <script>location.replace("/book/");</script>
 </head>
 <body>
-  <main class="page wrap">
-    <p class="page__kicker">book / llm</p>
-    <h1 class="page__title">正文迁入中</h1>
-    <p class="page__lead">《现代大模型》构建产物稍后落到此路径。先回 <a href="/book/">书架</a>。</p>
-  </main>
+  <p><a href="/book/">书架</a></p>
 </body>
 </html>
 HTML
@@ -91,6 +88,23 @@ build_book() {
   rm -rf "$DIST/book/llm"
   mkdir -p "$DIST/book/llm"
   cp -a "$web/site/." "$DIST/book/llm/"
+  # 丛书入口在 /book/ 书架；/book/llm/ 不再单独列三册
+  cat >"$DIST/book/llm/index.html" <<'HTML'
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>现代大模型</title>
+  <meta http-equiv="refresh" content="0;url=/book/" />
+  <link rel="canonical" href="https://shippingwang.com/book/" />
+  <script>location.replace("/book/");</script>
+</head>
+<body>
+  <p><a href="/book/">书架</a></p>
+</body>
+</html>
+HTML
   echo "book → $DIST/book/llm"
 }
 
