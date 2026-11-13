@@ -265,6 +265,10 @@ body.home .nav__links a.is-active {
   margin-top: 2.75rem;
 }
 
+.shelf + .shelf {
+  margin-top: 3.25rem;
+}
+
 .shelf__label {
   margin: 0 0 1.5rem;
   font-family: var(--font-display);
@@ -372,6 +376,10 @@ a.tome:hover .tome__card {
 
 .tome--soon .tome__card {
   box-shadow: none;
+}
+
+.tome--draft {
+  opacity: 0.82;
 }
 
 .shelf__plank {

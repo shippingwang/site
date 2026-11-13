@@ -6,7 +6,7 @@
 |------|------|
 | `/` | 首页 |
 | `/research/` | 研究笔记（内容仓 [`shippingwang/research`](https://github.com/shippingwang/research)） |
-| `/book/` | 书架（丛书分层）；正文在 `/book/llm/<册>/` |
+| `/book/` | 书架（现代大模型 / 现代视觉模型）；大模型正文在 `/book/llm/<册>/`，视觉粗目录在 `/book/vision/<册>/` |
 | `/life/` | 生活 |
 | `/idea/` | 短卡片 |
 
