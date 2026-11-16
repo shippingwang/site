@@ -8,9 +8,9 @@
 | `/research/` | 研究笔记（内容仓 [`shippingwang/research`](https://github.com/shippingwang/research)） |
 | `/book/` | 书架（现代大模型 / 现代视觉模型）；大模型正文在 `/book/llm/<册>/`，视觉粗目录在 `/book/vision/<册>/` |
 | `/life/` | 生活 |
-| `/idea/` | 短卡片 |
+| `/idea/` | 短念头（内容仓 [`shippingwang/idea`](https://github.com/shippingwang/idea)） |
 
-书稿仓库是 [`shippingwang/llm`](https://github.com/shippingwang/llm)；研究笔记是 [`shippingwang/research`](https://github.com/shippingwang/research)。都不要合进本仓。
+书稿仓库是 [`shippingwang/llm`](https://github.com/shippingwang/llm)；研究笔记是 [`shippingwang/research`](https://github.com/shippingwang/research)；念头是 [`shippingwang/idea`](https://github.com/shippingwang/idea)。都不要合进本仓。
 
 ## 本地
 
@@ -21,7 +21,7 @@ npx --yes serve dist   # 或 python3 -m http.server -d dist 8080
 
 ## 一键发布（research + llm + site）
 
-脚本：`scripts/publish.sh`。旁路默认：`../research`、`../现代大模型`。有改动会 commit / push，再空提交触发 site CI 重建线上站。
+脚本：`scripts/publish.sh`。旁路默认：`../research`、`../现代大模型`、`../idea`。有改动会 commit / push，再空提交触发 site CI 重建线上站。
 
 ### 常用命令
 
@@ -30,12 +30,13 @@ npx --yes serve dist   # 或 python3 -m http.server -d dist 8080
 ```bash
 cd /picassox/intelligent-cpfs/human-body/wsp/research/site
 
-./scripts/publish.sh              # 默认 all：research + llm + site
+./scripts/publish.sh              # 默认 all：research + llm + idea + site
 ./scripts/publish.sh all
 
 ./scripts/publish.sh site         # 只推站点壳子（/、/book/、css、assets 等）
 ./scripts/publish.sh llm          # 只推书稿仓 shippingwang/llm（《现代大模型》三册）
 ./scripts/publish.sh research     # 只推研究笔记仓 shippingwang/research
+./scripts/publish.sh idea         # 只推念头仓 shippingwang/idea
 
 ./scripts/publish.sh research llm # 可多选
 ./scripts/publish.sh site llm
@@ -47,6 +48,7 @@ cd /picassox/intelligent-cpfs/human-body/wsp/research/site
 MSG="update book page" ./scripts/publish.sh site
 MSG="update book3" ./scripts/publish.sh llm
 MSG="update research notes" ./scripts/publish.sh research
+MSG="update idea" ./scripts/publish.sh idea
 MSG="site + book3" ./scripts/publish.sh site llm
 ```
 
@@ -61,6 +63,9 @@ MSG="update book3" bash /picassox/intelligent-cpfs/human-body/wsp/research/site/
 
 # 3. 推研究笔记
 MSG="update research" bash /picassox/intelligent-cpfs/human-body/wsp/research/site/scripts/publish.sh research
+
+# 4. 推念头
+MSG="update idea" bash /picassox/intelligent-cpfs/human-body/wsp/research/site/scripts/publish.sh idea
 ```
 
 ### 说明
@@ -70,12 +75,14 @@ MSG="update research" bash /picassox/intelligent-cpfs/human-body/wsp/research/si
 | `site` | `shippingwang/site` | `/`、`/book/` 书架、壳子 css/js/assets |
 | `llm` | `shippingwang/llm` | `/book/llm/<册>/` 书稿正文 |
 | `research` | `shippingwang/research` | `/research/` 笔记 |
+| `idea` | `shippingwang/idea` | `/idea/` 短念头 |
 
 可选环境变量：
 
 - `MSG`：commit message（默认 `publish YYYY-MM-DD`）
 - `LLM_DIR`：书稿目录（默认 `../现代大模型`）
 - `RESEARCH_DIR`：笔记目录（默认 `../research`）
+- `IDEA_DIR`：念头目录（默认 `../idea`）
 
 `research` 仓里的 `./publish.sh` 仍可用，内部转调本脚本的 `research` 模式。
 
@@ -88,4 +95,4 @@ MSG="update research" bash /picassox/intelligent-cpfs/human-body/wsp/research/si
 Cloudflare Workers：`wrangler.toml` → `assets.directory = "dist"`。
 
 push `main` → `.github/workflows/deploy.yml`（需 `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID`）。  
-CI 会拉 [`llm`](https://github.com/shippingwang/llm) 与 [`research`](https://github.com/shippingwang/research) 编进 `dist/book/llm/`、`dist/research/`。
+CI 会拉 [`llm`](https://github.com/shippingwang/llm)、[`research`](https://github.com/shippingwang/research)、[`idea`](https://github.com/shippingwang/idea) 编进 `dist/book/llm/`、`dist/research/`、`dist/idea/`。

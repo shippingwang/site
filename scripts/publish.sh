@@ -5,16 +5,18 @@
 #   ./scripts/publish.sh all
 #   ./scripts/publish.sh research
 #   ./scripts/publish.sh llm
+#   ./scripts/publish.sh idea
 #   ./scripts/publish.sh site
 #   ./scripts/publish.sh research llm # 可多选
 #
 # 环境变量（可选）：
-#   RESEARCH_DIR  LLM_DIR  MSG
+#   RESEARCH_DIR  LLM_DIR  IDEA_DIR  MSG
 set -euo pipefail
 
 SITE_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 RESEARCH_DIR="${RESEARCH_DIR:-$SITE_ROOT/../research}"
 LLM_DIR="${LLM_DIR:-$SITE_ROOT/../现代大模型}"
+IDEA_DIR="${IDEA_DIR:-$SITE_ROOT/../idea}"
 MSG="${MSG:-publish $(date +%Y-%m-%d)}"
 
 TARGETS=()
@@ -102,6 +104,16 @@ if want llm; then
     书稿 网站 sync_notion.py wrangler.toml LICENSE .github .gitignore
 fi
 
+# —— idea：短念头 markdown → 推源文件（dist 在 gitignore）——
+if want idea; then
+  if [[ -f "$IDEA_DIR/build.py" ]]; then
+    echo "==> idea build"
+    python3 "$IDEA_DIR/build.py"
+  fi
+  push_repo "$IDEA_DIR" idea \
+    notes static build.py README.md .gitignore
+fi
+
 # —— site 壳：public / scripts / wrangler ——
 if want site; then
   push_repo "$SITE_ROOT" site \
@@ -109,6 +121,6 @@ if want site; then
 fi
 
 # 只要动过任一内容仓，或显式 all/site，就触发一次 site 重建
-if want all || want research || want llm || want site; then
+if want all || want research || want llm || want idea || want site; then
   trigger_site
 fi

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 拼个人站 dist/；编入 llm 书仓与 research 笔记仓
+# 拼个人站 dist/；编入 llm / research / idea 内容仓
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DIST="$ROOT/dist"
@@ -42,6 +42,24 @@ resolve_research_dir() {
     mkdir -p "$ROOT/.cache"
     rm -rf "$cache"
     git clone --depth 1 https://github.com/shippingwang/research.git "$cache"
+  fi
+  echo "$cache"
+}
+
+resolve_idea_dir() {
+  if [[ -n "${IDEA_DIR:-}" && -f "${IDEA_DIR}/build.py" ]]; then
+    echo "$IDEA_DIR"
+    return
+  fi
+  if [[ -f "$ROOT/../idea/build.py" ]]; then
+    echo "$ROOT/../idea"
+    return
+  fi
+  local cache="$ROOT/.cache/idea"
+  if [[ ! -f "$cache/build.py" ]]; then
+    mkdir -p "$ROOT/.cache"
+    rm -rf "$cache"
+    git clone --depth 1 https://github.com/shippingwang/idea.git "$cache"
   fi
   echo "$cache"
 }
@@ -134,6 +152,31 @@ if build_research; then
   :
 else
   echo "research build failed; keeping public/research placeholder" >&2
+fi
+
+build_idea() {
+  local src
+  src="$(resolve_idea_dir)"
+  echo "idea source → $src"
+  if ! command -v python3 >/dev/null; then
+    echo "no python3, skip idea" >&2
+    return 1
+  fi
+  if [[ ! -f "$src/build.py" ]]; then
+    echo "idea build.py missing" >&2
+    return 1
+  fi
+  python3 "$src/build.py"
+  rm -rf "$DIST/idea"
+  mkdir -p "$DIST/idea"
+  cp -a "$src/dist/." "$DIST/idea/"
+  echo "idea → $DIST/idea"
+}
+
+if build_idea; then
+  :
+else
+  echo "idea build failed; keeping public/idea placeholder" >&2
 fi
 
 echo "built → $DIST"
