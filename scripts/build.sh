@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 拼个人站 dist/；编入 llm / research / idea 内容仓
+# 拼个人站 dist/；编入 llm / vision / research / idea 内容仓
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DIST="$ROOT/dist"
@@ -60,6 +60,24 @@ resolve_idea_dir() {
     mkdir -p "$ROOT/.cache"
     rm -rf "$cache"
     git clone --depth 1 https://github.com/shippingwang/idea.git "$cache"
+  fi
+  echo "$cache"
+}
+
+resolve_vision_dir() {
+  if [[ -n "${VISION_DIR:-}" && -f "${VISION_DIR}/网站/mkdocs.yml" ]]; then
+    echo "$VISION_DIR"
+    return
+  fi
+  if [[ -f "$ROOT/../现代视觉模型/网站/mkdocs.yml" ]]; then
+    echo "$ROOT/../现代视觉模型"
+    return
+  fi
+  local cache="$ROOT/.cache/vlm"
+  if [[ ! -f "$cache/网站/mkdocs.yml" ]]; then
+    mkdir -p "$ROOT/.cache"
+    rm -rf "$cache"
+    git clone --depth 1 https://github.com/shippingwang/vlm.git "$cache"
   fi
   echo "$cache"
 }
@@ -131,6 +149,78 @@ if build_book; then
 else
   echo "book build failed, placeholder" >&2
   write_placeholder
+fi
+
+write_vision_placeholder() {
+  mkdir -p "$DIST/book/vision"
+  cat >"$DIST/book/vision/index.html" <<'HTML'
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>现代视觉模型</title>
+  <meta http-equiv="refresh" content="0;url=/book/" />
+  <link rel="canonical" href="https://shippingwang.com/book/" />
+  <script>location.replace("/book/");</script>
+</head>
+<body>
+  <p><a href="/book/">书架</a></p>
+</body>
+</html>
+HTML
+}
+
+build_vision() {
+  local vlm web
+  vlm="$(resolve_vision_dir)"
+  web="$vlm/网站"
+  echo "vision source → $web"
+
+  if ! command -v python3 >/dev/null; then
+    echo "no python3, skip vision" >&2
+    write_vision_placeholder
+    return
+  fi
+  if [[ ! -f "$web/mkdocs.yml" ]]; then
+    echo "vision mkdocs missing" >&2
+    write_vision_placeholder
+    return 1
+  fi
+
+  python3 -m pip install -q -r "$web/requirements.txt"
+  if [[ -f "$web/sync_content.py" ]]; then
+    python3 "$web/sync_content.py" || echo "vision sync_content failed, using existing docs" >&2
+  fi
+  python3 -m mkdocs build --config-file "$web/mkdocs.yml"
+
+  rm -rf "$DIST/book/vision"
+  mkdir -p "$DIST/book/vision"
+  cp -a "$web/site/." "$DIST/book/vision/"
+  cat >"$DIST/book/vision/index.html" <<'HTML'
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>现代视觉模型</title>
+  <meta http-equiv="refresh" content="0;url=/book/" />
+  <link rel="canonical" href="https://shippingwang.com/book/" />
+  <script>location.replace("/book/");</script>
+</head>
+<body>
+  <p><a href="/book/">书架</a></p>
+</body>
+</html>
+HTML
+  echo "vision → $DIST/book/vision"
+}
+
+if build_vision; then
+  :
+else
+  echo "vision build failed, placeholder" >&2
+  write_vision_placeholder
 fi
 
 build_research() {
