@@ -113,7 +113,7 @@ if want idea; then
     python3 "$IDEA_DIR/build.py"
   fi
   push_repo "$IDEA_DIR" idea \
-    notes static build.py README.md .gitignore
+    notes todos static build.py README.md .gitignore
 fi
 
 # —— vision：现代视觉模型书稿 → mkdocs sync 后推 vlm ——
